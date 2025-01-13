@@ -103,7 +103,7 @@ async function handleSubmit(event) {
     localStorage.setItem('cardRequests', JSON.stringify(cardRequests));
 
     // Show confirmation message
-    document.getElementById('prayerForm').style.display = 'none';
+    document.getElementById('cardForm').style.display = 'none';
     document.getElementById('confirmation').classList.remove('hidden');
 
     // Reset form (will be hidden but ready if we want to show it again)
@@ -157,19 +157,19 @@ function downloadAllRequests() {
         {wch: 20}, // Requester
         {wch: 20}, // Receiver
         {wch: 30}, // Address
-        {wch: 40}, // Prayer Request
+        {wch: 40}, // Card Message
         {wch: 30}  // Photo
     ];
 
     // Add worksheet to workbook
-    XLSX.utils.book_append_sheet(wb, ws, 'Prayer Requests');
+    XLSX.utils.book_append_sheet(wb, ws, 'Card Requests');
 
     // Save workbook
-    XLSX.writeFile(wb, 'prayer_requests.xlsx');
+    XLSX.writeFile(wb, 'card_requests.xlsx');
 }
 
 function submitAnotherRequest() {
-    document.getElementById('prayerForm').style.display = 'block';
+    document.getElementById('cardForm').style.display = 'block';
     document.getElementById('confirmation').classList.add('hidden');
     // Clear photo preview
     const preview = document.getElementById('photoPreview');
