@@ -83,27 +83,27 @@ body {
     border-bottom-style: solid;
 }
 
-.checkbox-group {
-    margin: 8px 0;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.checkbox-group input[type="checkbox"] {
+input[type="checkbox"] {
     width: 16px;
     height: 16px;
     cursor: pointer;
-    flex-shrink: 0;
-    margin: 0;
+    margin-right: 8px;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
 }
 
-.checkbox-group label {
+input[type="checkbox"] + label {
     display: inline;
-    margin: 0;
     cursor: pointer;
     font-weight: normal;
-    line-height: 1;
+    line-height: 1.6;
+}
+
+br {
+    margin-bottom: 8px;
+    display: block;
+    content: "";
 }
 
 .form-group {
