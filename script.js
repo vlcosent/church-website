@@ -38,11 +38,24 @@ document.getElementById('photo').addEventListener('change', async function(event
                 lines.forEach(line => {
                     const lowerLine = line.toLowerCase();
                     if (lowerLine.includes('from:') || lowerLine.includes('sender:')) {
-                        document.getElementById('requester').value = line.split(':')[1]?.trim() || '';
+                        const name = line.split(':')[1]?.trim() || '';
+                        const [firstName = '', lastName = ''] = name.split(' ');
+                        document.getElementById('requesterFirstName').value = firstName;
+                        document.getElementById('requesterLastName').value = lastName;
                     } else if (lowerLine.includes('to:') || lowerLine.includes('recipient:')) {
-                        document.getElementById('receiver').value = line.split(':')[1]?.trim() || '';
+                        const name = line.split(':')[1]?.trim() || '';
+                        const [firstName = '', lastName = ''] = name.split(' ');
+                        document.getElementById('recipientFirstName').value = firstName;
+                        document.getElementById('recipientLastName').value = lastName;
                     } else if (lowerLine.includes('address:') || lowerLine.includes('send to:')) {
-                        document.getElementById('address').value = line.split(':')[1]?.trim() || '';
+                        const address = line.split(':')[1]?.trim() || '';
+                        const zipMatch = address.match(/\b\d{5}\b/);
+                        if (zipMatch) {
+                            document.getElementById('zipcode').value = zipMatch[0];
+                            document.getElementById('street').value = address.replace(zipMatch[0], '').trim();
+                        } else {
+                            document.getElementById('street').value = address;
+                        }
                     } else if (lowerLine.includes('message:') || lowerLine.includes('note:')) {
                         messageText = line.split(':')[1]?.trim() || '';
                     } else {
@@ -64,9 +77,12 @@ async function handleSubmit(event) {
     event.preventDefault();
     
     // Get form values
-    const requester = document.getElementById('requester').value;
-    const receiver = document.getElementById('receiver').value;
-    const address = document.getElementById('address').value;
+    const requesterFirstName = document.getElementById('requesterFirstName').value;
+    const requesterLastName = document.getElementById('requesterLastName').value;
+    const recipientFirstName = document.getElementById('recipientFirstName').value;
+    const recipientLastName = document.getElementById('recipientLastName').value;
+    const street = document.getElementById('street').value;
+    const zipcode = document.getElementById('zipcode').value;
     const request = document.getElementById('request').value;
     const date = new Date().toLocaleDateString();
     const time = new Date().toLocaleTimeString();
@@ -93,8 +109,8 @@ async function handleSubmit(event) {
     }
 
     // Validate that either photo is uploaded or fields are filled
-    if (!photoData && (!requester || !receiver || !address)) {
-        alert('Please either upload a card photo or fill in the required fields (sender, recipient, and address).');
+    if (!photoData && (!requesterFirstName || !recipientFirstName || !street || !zipcode)) {
+        alert('Please either upload a card photo or fill in the required fields (names and address).');
         return;
     }
 
@@ -102,11 +118,11 @@ async function handleSubmit(event) {
     cardRequests.push({
         date,
         time,
-        requester,
-        receiver,
+        requester: `${requesterFirstName} ${requesterLastName}`.trim(),
+        receiver: `${recipientFirstName} ${recipientLastName}`.trim(),
         isLocal,
         isNonMember,
-        address,
+        address: `${street}, ${zipcode}`.trim(),
         request,
         photo: photoData
     });
