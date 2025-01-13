@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crossville Church of Christ - Prayer Requests</title>
+    <title>Crossville Church of Christ - Card Request Form</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/tesseract.js@v2.1.0/dist/tesseract.min.js"></script>
@@ -13,24 +13,24 @@
     <div class="container">
         <header class="site-header">
             <h1>Crossville Church of Christ</h1>
-            <h2>Prayer Request Form</h2>
+            <h2>Card Request Form</h2>
         </header>
         <form id="prayerForm" onsubmit="handleSubmit(event)">
             <div class="form-group">
-                <label for="photo">Upload Prayer Request Photo:</label>
+                <label for="photo">Upload Card Photo:</label>
                 <input type="file" id="photo" name="photo" accept="image/*" class="file-input">
                 <div id="photoPreview" class="photo-preview"></div>
-                <p class="photo-help">Upload a photo of the prayer request to automatically fill in the details</p>
+                <p class="photo-help">Upload a photo of the card to automatically fill in the details</p>
             </div>
 
             <div id="manualFields" class="manual-fields">
                 <div class="form-group">
-                    <label for="requester">Who is requesting the prayer:</label>
+                    <label for="requester">Who is requesting the card:</label>
                     <input type="text" id="requester" name="requester">
                 </div>
 
                 <div class="form-group">
-                    <label for="receiver">Who is receiving the prayer:</label>
+                    <label for="receiver">Who should receive the card:</label>
                     <input type="text" id="receiver" name="receiver">
                 </div>
 
@@ -40,21 +40,21 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="request">Prayer request:</label>
-                    <textarea id="request" name="request" rows="4"></textarea>
+                    <label for="request">Card message or special instructions:</label>
+                    <textarea id="request" name="request" rows="4" placeholder="Enter any special message for the card or specific instructions"></textarea>
                 </div>
             </div>
 
-            <button type="submit">Submit Prayer Request</button>
-            <button type="button" class="secondary-button" onclick="downloadAllRequests()">Download Prayer Requests (Excel)</button>
+            <button type="submit">Submit Card Request</button>
+            <button type="button" class="secondary-button" onclick="downloadAllRequests()">Download Card Requests (Excel)</button>
         </form>
 
         <div id="confirmation" class="confirmation hidden">
-            <h2>Thank you for your prayer request!</h2>
-            <p>Your request has been submitted successfully.</p>
+            <h2>Thank you for your card request!</h2>
+            <p>Your card request has been submitted successfully.</p>
             <div class="confirmation-buttons">
-                <button type="button" onclick="submitAnotherRequest()">Submit Another Request</button>
-                <button type="button" class="secondary-button" onclick="downloadAllRequests()">Download All Prayer Requests</button>
+                <button type="button" onclick="submitAnotherRequest()">Submit Another Card Request</button>
+                <button type="button" class="secondary-button" onclick="downloadAllRequests()">Download All Card Requests</button>
             </div>
         </div>
     </div>

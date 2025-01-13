@@ -1,5 +1,5 @@
-// Initialize or get existing prayer requests from localStorage
-let prayerRequests = JSON.parse(localStorage.getItem('prayerRequests') || '[]');
+// Initialize or get existing card requests from localStorage
+let cardRequests = JSON.parse(localStorage.getItem('cardRequests') || '[]');
 
 // Add photo preview and OCR functionality
 document.getElementById('photo').addEventListener('change', async function(event) {
@@ -30,25 +30,27 @@ document.getElementById('photo').addEventListener('change', async function(event
                 const text = result.data.text;
                 console.log('Extracted text:', text);
 
-                // Simple text parsing - you may need to adjust this based on your actual image format
+                // Parse text for card-specific information
                 const lines = text.split('\n').filter(line => line.trim());
                 
                 // Try to identify and fill in form fields based on the extracted text
-                let requestText = '';
+                let messageText = '';
                 lines.forEach(line => {
                     const lowerLine = line.toLowerCase();
-                    if (lowerLine.includes('requester') || lowerLine.includes('from')) {
+                    if (lowerLine.includes('from:') || lowerLine.includes('sender:')) {
                         document.getElementById('requester').value = line.split(':')[1]?.trim() || '';
-                    } else if (lowerLine.includes('receiver') || lowerLine.includes('to')) {
+                    } else if (lowerLine.includes('to:') || lowerLine.includes('recipient:')) {
                         document.getElementById('receiver').value = line.split(':')[1]?.trim() || '';
-                    } else if (lowerLine.includes('address')) {
+                    } else if (lowerLine.includes('address:') || lowerLine.includes('send to:')) {
                         document.getElementById('address').value = line.split(':')[1]?.trim() || '';
+                    } else if (lowerLine.includes('message:') || lowerLine.includes('note:')) {
+                        messageText = line.split(':')[1]?.trim() || '';
                     } else {
-                        requestText += line + '\n';
+                        messageText += line + '\n';
                     }
                 });
                 
-                document.getElementById('request').value = requestText.trim();
+                document.getElementById('request').value = messageText.trim();
             } catch (error) {
                 console.error('OCR Error:', error);
             }
@@ -81,13 +83,13 @@ async function handleSubmit(event) {
     }
 
     // Validate that either photo is uploaded or fields are filled
-    if (!photoData && (!requester || !receiver || !address || !request)) {
-        alert('Please either upload a photo or fill in all fields manually.');
+    if (!photoData && (!requester || !receiver || !address)) {
+        alert('Please either upload a card photo or fill in the required fields (sender, recipient, and address).');
         return;
     }
 
     // Add new request to array
-    prayerRequests.push({
+    cardRequests.push({
         date,
         time,
         requester,
@@ -98,7 +100,7 @@ async function handleSubmit(event) {
     });
 
     // Save to localStorage
-    localStorage.setItem('prayerRequests', JSON.stringify(prayerRequests));
+    localStorage.setItem('cardRequests', JSON.stringify(cardRequests));
 
     // Show confirmation message
     document.getElementById('prayerForm').style.display = 'none';
@@ -114,11 +116,11 @@ function downloadAllRequests() {
     
     // Create worksheet data
     const wsData = [
-        ['Date', 'Time', 'Requester', 'Receiver', 'Address', 'Prayer Request', 'Photo']
+        ['Date', 'Time', 'Requested By', 'Card Recipient', 'Mailing Address', 'Message/Instructions', 'Card Photo']
     ];
 
     // Add requests to worksheet data in reverse order (newest first)
-    [...prayerRequests].reverse().forEach((request, index) => {
+    [...cardRequests].reverse().forEach((request, index) => {
         wsData.push([
             request.date,
             request.time,
