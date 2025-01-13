@@ -285,6 +285,45 @@ button.secondary-button:hover {
     display: none;
 }
 
+.requests-table {
+    margin-top: 40px;
+    overflow-x: auto;
+}
+
+.requests-table h2 {
+    margin-bottom: 20px;
+    color: #1a365d;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+    white-space: nowrap;
+}
+
+th {
+    background-color: #f7fafc;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+tbody tr:hover {
+    background-color: #f7fafc;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
 @media (max-width: 480px) {
     .container {
         padding: 30px;

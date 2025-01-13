@@ -1,6 +1,34 @@
 // Initialize or get existing card requests from localStorage
 let cardRequests = JSON.parse(localStorage.getItem('cardRequests') || '[]');
 
+// Function to update the table with card requests
+function updateRequestsTable() {
+    const tableBody = document.getElementById('requestsTableBody');
+    tableBody.innerHTML = '';
+
+    // Add requests to table in reverse order (newest first)
+    [...cardRequests].reverse().forEach(request => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${request.date}</td>
+            <td>${request.time}</td>
+            <td>${request.requesterFirstName || ''}</td>
+            <td>${request.requesterLastName || ''}</td>
+            <td>${request.recipientFirstName || ''}</td>
+            <td>${request.recipientLastName || ''}</td>
+            <td>${request.isLocal ? 'Yes' : 'No'}</td>
+            <td>${request.isNonMember ? 'Yes' : 'No'}</td>
+            <td>${request.street || ''}</td>
+            <td>${request.zipcode || ''}</td>
+            <td>${request.request || ''}</td>
+        `;
+        tableBody.appendChild(row);
+    });
+}
+
+// Initialize table when page loads
+document.addEventListener('DOMContentLoaded', updateRequestsTable);
+
 // Add photo preview and OCR functionality
 document.getElementById('photo').addEventListener('change', async function(event) {
     const file = event.target.files[0];
@@ -132,6 +160,9 @@ async function handleSubmit(event) {
 
     // Save to localStorage
     localStorage.setItem('cardRequests', JSON.stringify(cardRequests));
+
+    // Update the table
+    updateRequestsTable();
 
     // Show confirmation message
     document.getElementById('cardForm').style.display = 'none';
