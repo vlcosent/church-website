@@ -40,6 +40,66 @@ body {
     color: #4a5568;
     font-size: 1.5em;
     font-weight: normal;
+    margin-bottom: 20px;
+}
+
+.guidance-text {
+    background-color: #ebf8ff;
+    border: 1px solid #bee3f8;
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 15px;
+    color: #2c5282;
+    font-size: 0.95em;
+    line-height: 1.5;
+}
+
+.guidance-text p {
+    margin: 0 0 10px 0;
+}
+
+.guidance-text p:last-child {
+    margin-bottom: 0;
+}
+
+.guidance-text .note {
+    font-style: italic;
+    color: #4a5568;
+    font-size: 0.95em;
+}
+
+.guidance-text strong {
+    color: #2b6cb0;
+}
+
+.prayer-link {
+    color: #2b6cb0;
+    text-decoration: none;
+    border-bottom: 1px dotted #2b6cb0;
+}
+
+.prayer-link:hover {
+    color: #2c5282;
+    border-bottom-style: solid;
+}
+
+.checkbox-group {
+    margin: 8px 0;
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: auto;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.checkbox-group label {
+    display: inline;
+    margin: 0;
+    cursor: pointer;
+    font-weight: normal;
 }
 
 .form-group {

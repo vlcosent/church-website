@@ -71,6 +71,16 @@ async function handleSubmit(event) {
     const date = new Date().toLocaleDateString();
     const time = new Date().toLocaleTimeString();
 
+    // Get checkbox values
+    const isLocal = document.getElementById('isLocal').checked;
+    const isNonMember = document.getElementById('isNonMember').checked;
+
+    // Validate recipient status
+    if (!isLocal || !isNonMember) {
+        alert('This form is only for local non-members. For others, please use the prayer request form.');
+        return;
+    }
+
     // Handle photo
     let photoData = null;
     const photoFile = document.getElementById('photo').files[0];
@@ -94,6 +104,8 @@ async function handleSubmit(event) {
         time,
         requester,
         receiver,
+        isLocal,
+        isNonMember,
         address,
         request,
         photo: photoData
@@ -116,7 +128,7 @@ function downloadAllRequests() {
     
     // Create worksheet data
     const wsData = [
-        ['Date', 'Time', 'Requested By', 'Card Recipient', 'Mailing Address', 'Message/Instructions', 'Card Photo']
+        ['Date', 'Time', 'Requested By', 'Card Recipient', 'Local', 'Non-Member', 'Mailing Address', 'Message/Instructions', 'Card Photo']
     ];
 
     // Add requests to worksheet data in reverse order (newest first)
@@ -126,6 +138,8 @@ function downloadAllRequests() {
             request.time,
             request.requester,
             request.receiver,
+            request.isLocal ? 'Yes' : 'No',
+            request.isNonMember ? 'Yes' : 'No',
             request.address,
             request.request,
             '' // Photo cell will be handled separately
@@ -134,7 +148,7 @@ function downloadAllRequests() {
         if (request.photo) {
             // Add image to the photo cell
             const rowIndex = index + 2; // +2 because of header row and 1-based indexing
-            const photoCell = XLSX.utils.encode_cell({r: rowIndex-1, c: 6}); // Column G
+            const photoCell = XLSX.utils.encode_cell({r: rowIndex-1, c: 8}); // Column I
             
             // Create drawing object for the image
             if (!wb.Drawings) wb.Drawings = [];
@@ -155,9 +169,11 @@ function downloadAllRequests() {
         {wch: 12}, // Date
         {wch: 12}, // Time
         {wch: 20}, // Requester
-        {wch: 20}, // Receiver
+        {wch: 20}, // Recipient
+        {wch: 10}, // Local
+        {wch: 12}, // Non-Member
         {wch: 30}, // Address
-        {wch: 40}, // Card Message
+        {wch: 40}, // Message
         {wch: 30}  // Photo
     ];
 
@@ -179,4 +195,7 @@ function submitAnotherRequest() {
         img.src = '';
     }
     document.getElementById('photo').value = '';
+    // Clear checkboxes
+    document.getElementById('isLocal').checked = false;
+    document.getElementById('isNonMember').checked = false;
 }

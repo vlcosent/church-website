@@ -14,6 +14,10 @@
         <header class="site-header">
             <h1>Crossville Church of Christ</h1>
             <h2>Card Request Form</h2>
+            <div class="guidance-text">
+                <p>This form is specifically for requesting cards to be sent to <strong>local, non-members</strong> who may have their hearts softened to receive the gospel by first receiving a card.</p>
+                <p class="note">Note: For non-local individuals or church members, please use the <a href="#" class="prayer-link">prayer request form</a> or <a href="#" class="prayer-link">extended prayer list</a>.</p>
+            </div>
         </header>
         <form id="cardForm" onsubmit="handleSubmit(event)">
             <div class="form-group">
@@ -32,6 +36,18 @@
                 <div class="form-group">
                     <label for="receiver">Who should receive the card:</label>
                     <input type="text" id="receiver" name="receiver">
+                </div>
+
+                <div class="form-group">
+                    <label>Recipient Status:</label>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="isLocal" name="isLocal">
+                        <label for="isLocal">Recipient is local to Crossville area</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="isNonMember" name="isNonMember">
+                        <label for="isNonMember">Recipient is not a church member</label>
+                    </div>
                 </div>
 
                 <div class="form-group">
