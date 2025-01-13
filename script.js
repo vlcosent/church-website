@@ -144,19 +144,27 @@ function downloadAllRequests() {
     
     // Create worksheet data
     const wsData = [
-        ['Date', 'Time', 'Requested By', 'Card Recipient', 'Local', 'Non-Member', 'Mailing Address', 'Message/Instructions', 'Card Photo']
+        ['Date', 'Time', 'Requester First Name', 'Requester Last Name', 'Recipient First Name', 'Recipient Last Name', 'Local', 'Non-Member', 'Street Address', 'ZIP Code', 'Message/Instructions', 'Card Photo']
     ];
 
     // Add requests to worksheet data in reverse order (newest first)
     [...cardRequests].reverse().forEach((request, index) => {
+        // Split names and address
+        const [requesterFirst = '', requesterLast = ''] = request.requester.split(' ');
+        const [recipientFirst = '', recipientLast = ''] = request.receiver.split(' ');
+        const [street = '', zipcode = ''] = request.address.split(',').map(s => s.trim());
+
         wsData.push([
             request.date,
             request.time,
-            request.requester,
-            request.receiver,
+            requesterFirst,
+            requesterLast,
+            recipientFirst,
+            recipientLast,
             request.isLocal ? 'Yes' : 'No',
             request.isNonMember ? 'Yes' : 'No',
-            request.address,
+            street,
+            zipcode,
             request.request,
             '' // Photo cell will be handled separately
         ]);
@@ -164,7 +172,7 @@ function downloadAllRequests() {
         if (request.photo) {
             // Add image to the photo cell
             const rowIndex = index + 2; // +2 because of header row and 1-based indexing
-            const photoCell = XLSX.utils.encode_cell({r: rowIndex-1, c: 8}); // Column I
+            const photoCell = XLSX.utils.encode_cell({r: rowIndex-1, c: 11}); // Column L
             
             // Create drawing object for the image
             if (!wb.Drawings) wb.Drawings = [];
@@ -184,11 +192,14 @@ function downloadAllRequests() {
     ws['!cols'] = [
         {wch: 12}, // Date
         {wch: 12}, // Time
-        {wch: 20}, // Requester
-        {wch: 20}, // Recipient
+        {wch: 20}, // Requester First Name
+        {wch: 20}, // Requester Last Name
+        {wch: 20}, // Recipient First Name
+        {wch: 20}, // Recipient Last Name
         {wch: 10}, // Local
         {wch: 12}, // Non-Member
-        {wch: 30}, // Address
+        {wch: 30}, // Street Address
+        {wch: 12}, // ZIP Code
         {wch: 40}, // Message
         {wch: 30}  // Photo
     ];
