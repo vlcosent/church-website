@@ -124,6 +124,24 @@ label {
     font-size: 1.1em;
 }
 
+.input-row {
+    display: flex;
+    gap: 15px;
+    margin-top: 5px;
+}
+
+.input-group {
+    flex: 1;
+}
+
+.input-group.zip {
+    flex: 0 0 120px;
+}
+
+.input-group.street {
+    flex: 1;
+}
+
 input, textarea {
     width: 100%;
     padding: 14px;
@@ -145,6 +163,11 @@ input:focus, textarea:focus {
     border-color: #4a5568;
     box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
     background-color: #fff;
+}
+
+input::placeholder {
+    color: #a0aec0;
+    font-size: 0.95em;
 }
 
 textarea {
