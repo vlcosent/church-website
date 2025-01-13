@@ -72,17 +72,6 @@ body {
     color: #2b6cb0;
 }
 
-.prayer-link {
-    color: #2b6cb0;
-    text-decoration: none;
-    border-bottom: 1px dotted #2b6cb0;
-}
-
-.prayer-link:hover {
-    color: #2c5282;
-    border-bottom-style: solid;
-}
-
 input[type="checkbox"] {
     width: 16px;
     height: 16px;
