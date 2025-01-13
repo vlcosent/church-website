@@ -118,11 +118,14 @@ async function handleSubmit(event) {
     cardRequests.push({
         date,
         time,
-        requester: `${requesterFirstName} ${requesterLastName}`.trim(),
-        receiver: `${recipientFirstName} ${recipientLastName}`.trim(),
+        requesterFirstName,
+        requesterLastName,
+        recipientFirstName,
+        recipientLastName,
         isLocal,
         isNonMember,
-        address: `${street}, ${zipcode}`.trim(),
+        street,
+        zipcode,
         request,
         photo: photoData
     });
@@ -149,23 +152,18 @@ function downloadAllRequests() {
 
     // Add requests to worksheet data in reverse order (newest first)
     [...cardRequests].reverse().forEach((request, index) => {
-        // Split names and address
-        const [requesterFirst = '', requesterLast = ''] = request.requester.split(' ');
-        const [recipientFirst = '', recipientLast = ''] = request.receiver.split(' ');
-        const [street = '', zipcode = ''] = request.address.split(',').map(s => s.trim());
-
         wsData.push([
             request.date,
             request.time,
-            requesterFirst,
-            requesterLast,
-            recipientFirst,
-            recipientLast,
+            request.requesterFirstName || '',
+            request.requesterLastName || '',
+            request.recipientFirstName || '',
+            request.recipientLastName || '',
             request.isLocal ? 'Yes' : 'No',
             request.isNonMember ? 'Yes' : 'No',
-            street,
-            zipcode,
-            request.request,
+            request.street || '',
+            request.zipcode || '',
+            request.request || '',
             '' // Photo cell will be handled separately
         ]);
 
