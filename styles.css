@@ -7,9 +7,9 @@
 body {
     font-family: 'Crimson Text', serif;
     line-height: 1.6;
-    background-color: #f5f5f5;
-    background-image: linear-gradient(45deg, #f5f5f5 0%, #e8e8e8 100%);
-    padding: 20px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
+    min-height: 100vh;
+    padding: 30px 20px;
     color: #2c3e50;
 }
 
@@ -17,23 +17,29 @@ body {
     max-width: 700px;
     margin: 0 auto;
     background-color: white;
-    padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    padding: 48px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.container:hover {
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
 }
 
 .site-header {
     text-align: center;
     margin-bottom: 40px;
-    padding-bottom: 30px;
-    border-bottom: 2px solid #eaeaea;
+    padding-bottom: 35px;
+    border-bottom: 2px solid #edf2f7;
 }
 
 .site-header h1 {
     color: #1a365d;
     font-size: 2.5em;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     font-weight: 600;
+    letter-spacing: -0.5px;
 }
 
 .site-header h2 {
@@ -41,21 +47,23 @@ body {
     font-size: 1.5em;
     font-weight: normal;
     margin-bottom: 20px;
+    letter-spacing: -0.3px;
 }
 
 .guidance-text {
-    background-color: #ebf8ff;
-    border: 1px solid #bee3f8;
-    border-radius: 8px;
-    padding: 15px;
-    margin-top: 15px;
+    background: linear-gradient(to right, #ebf8ff, #e6fffa);
+    border: none;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
     color: #2c5282;
     font-size: 0.95em;
-    line-height: 1.5;
+    line-height: 1.6;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .guidance-text p {
-    margin: 0 0 10px 0;
+    margin: 0 0 12px 0;
 }
 
 .guidance-text p:last-child {
@@ -70,16 +78,25 @@ body {
 
 .guidance-text strong {
     color: #2b6cb0;
+    font-weight: 600;
 }
 
 input[type="checkbox"] {
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
     cursor: pointer;
-    margin-right: 8px;
+    margin-right: 10px;
     vertical-align: middle;
     position: relative;
     top: -1px;
+    border-radius: 4px;
+    border: 2px solid #cbd5e0;
+    transition: all 0.2s ease;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #2b6cb0;
+    border-color: #2b6cb0;
 }
 
 input[type="checkbox"] + label {
@@ -96,12 +113,12 @@ br {
 }
 
 .form-group {
-    margin-bottom: 25px;
+    margin-bottom: 30px;
 }
 
 label {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     color: #2d3748;
     font-weight: 600;
     font-size: 1.1em;
@@ -109,18 +126,25 @@ label {
 
 input, textarea {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
+    padding: 14px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
     font-size: 16px;
     font-family: 'Crimson Text', serif;
-    transition: border-color 0.3s, box-shadow 0.3s;
+    transition: all 0.3s ease;
+    background-color: #f8fafc;
+}
+
+input:hover, textarea:hover {
+    border-color: #cbd5e0;
+    background-color: #fff;
 }
 
 input:focus, textarea:focus {
     outline: none;
     border-color: #4a5568;
-    box-shadow: 0 0 0 3px rgba(74, 85, 104, 0.1);
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+    background-color: #fff;
 }
 
 textarea {
@@ -131,11 +155,11 @@ textarea {
 button {
     display: block;
     width: 100%;
-    padding: 14px;
-    background-color: #2b6cb0;
+    padding: 16px;
+    background: linear-gradient(to right, #2b6cb0, #2c5282);
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 12px;
     font-size: 1.1em;
     font-family: 'Crimson Text', serif;
     cursor: pointer;
@@ -146,32 +170,33 @@ button {
 }
 
 button:hover {
-    background-color: #2c5282;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(43, 108, 176, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(43, 108, 176, 0.25);
 }
 
 button.secondary-button {
-    background-color: #718096;
+    background: linear-gradient(to right, #718096, #4a5568);
 }
 
 button.secondary-button:hover {
-    background-color: #4a5568;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(74, 85, 104, 0.25);
 }
 
 .confirmation {
     text-align: center;
-    margin-top: 30px;
-    padding: 25px;
-    background-color: #ebf8ff;
-    border-radius: 10px;
+    margin-top: 35px;
+    padding: 30px;
+    background: linear-gradient(to right, #ebf8ff, #e6fffa);
+    border-radius: 15px;
     color: #2c5282;
-    border: 1px solid #bee3f8;
+    border: none;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .confirmation h2 {
     color: #2b6cb0;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
 .confirmation-buttons {
@@ -187,11 +212,11 @@ button.secondary-button:hover {
 
 .file-input {
     width: 100%;
-    padding: 20px;
+    padding: 25px;
     border: 2px dashed #4299e1;
-    border-radius: 10px;
+    border-radius: 15px;
     font-size: 1.1em;
-    background-color: #ebf8ff;
+    background: linear-gradient(to right, #ebf8ff, #e6fffa);
     cursor: pointer;
     transition: all 0.3s ease;
     text-align: center;
@@ -199,12 +224,13 @@ button.secondary-button:hover {
 
 .file-input:hover {
     border-color: #2b6cb0;
-    background-color: #bee3f8;
-    transform: translateY(-1px);
+    background: linear-gradient(to right, #bee3f8, #b2f5ea);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(66, 153, 225, 0.15);
 }
 
 .photo-help {
-    margin-top: 8px;
+    margin-top: 10px;
     color: #4a5568;
     font-size: 0.95em;
     text-align: center;
@@ -212,13 +238,13 @@ button.secondary-button:hover {
 }
 
 .manual-fields {
-    margin-top: 35px;
-    padding-top: 25px;
+    margin-top: 40px;
+    padding-top: 35px;
     border-top: 2px solid #edf2f7;
 }
 
 .photo-preview {
-    margin-top: 15px;
+    margin-top: 20px;
     max-width: 100%;
     min-height: 0;
     text-align: center;
@@ -227,9 +253,9 @@ button.secondary-button:hover {
 .photo-preview img {
     max-width: 100%;
     max-height: 300px;
-    border-radius: 10px;
+    border-radius: 15px;
     display: none;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .hidden {
@@ -238,7 +264,7 @@ button.secondary-button:hover {
 
 @media (max-width: 480px) {
     .container {
-        padding: 25px;
+        padding: 30px;
     }
     
     .site-header h1 {
