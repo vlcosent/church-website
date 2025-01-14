@@ -29,18 +29,6 @@
 
             <div id="manualFields" class="manual-fields">
                 <div class="form-group name-group">
-                    <label>Requester Name:</label>
-                    <div class="input-row">
-                        <div class="input-group">
-                            <input type="text" id="requesterFirstName" name="requesterFirstName" placeholder="First Name">
-                        </div>
-                        <div class="input-group">
-                            <input type="text" id="requesterLastName" name="requesterLastName" placeholder="Last Name">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group name-group">
                     <label>Recipient Name:</label>
                     <div class="input-row">
                         <div class="input-group">
@@ -53,15 +41,6 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Recipient Status:</label>
-                    <input type="checkbox" id="isLocal" name="isLocal">
-                    <label for="isLocal">Recipient is local to Crossville area</label>
-                    <br>
-                    <input type="checkbox" id="isNonMember" name="isNonMember">
-                    <label for="isNonMember">Recipient is not a church member</label>
-                </div>
-
-                <div class="form-group">
                     <label>Recipient Address:</label>
                     <div class="input-row">
                         <div class="input-group street">
@@ -71,6 +50,15 @@
                             <input type="text" id="zipcode" name="zipcode" placeholder="ZIP Code" maxlength="5">
                         </div>
                     </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Recipient Status:</label>
+                    <input type="checkbox" id="isLocal" name="isLocal">
+                    <label for="isLocal">Recipient is local to Crossville area</label>
+                    <br>
+                    <input type="checkbox" id="isNonMember" name="isNonMember">
+                    <label for="isNonMember">Recipient is not a church member</label>
                 </div>
 
                 <div class="form-group">
@@ -99,10 +87,8 @@
                     <tr>
                         <th>Date</th>
                         <th>Time</th>
-                        <th>Requester First Name</th>
-                        <th>Requester Last Name</th>
-                        <th>Recipient First Name</th>
-                        <th>Recipient Last Name</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
                         <th>Local</th>
                         <th>Non-Member</th>
                         <th>Street Address</th>

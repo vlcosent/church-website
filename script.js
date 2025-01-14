@@ -12,8 +12,6 @@ function updateRequestsTable() {
         row.innerHTML = `
             <td>${request.date}</td>
             <td>${request.time}</td>
-            <td>${request.requesterFirstName || ''}</td>
-            <td>${request.requesterLastName || ''}</td>
             <td>${request.recipientFirstName || ''}</td>
             <td>${request.recipientLastName || ''}</td>
             <td>${request.isLocal ? 'Yes' : 'No'}</td>
@@ -65,12 +63,7 @@ document.getElementById('photo').addEventListener('change', async function(event
                 let messageText = '';
                 lines.forEach(line => {
                     const lowerLine = line.toLowerCase();
-                    if (lowerLine.includes('from:') || lowerLine.includes('sender:')) {
-                        const name = line.split(':')[1]?.trim() || '';
-                        const [firstName = '', lastName = ''] = name.split(' ');
-                        document.getElementById('requesterFirstName').value = firstName;
-                        document.getElementById('requesterLastName').value = lastName;
-                    } else if (lowerLine.includes('to:') || lowerLine.includes('recipient:')) {
+                    if (lowerLine.includes('to:') || lowerLine.includes('recipient:')) {
                         const name = line.split(':')[1]?.trim() || '';
                         const [firstName = '', lastName = ''] = name.split(' ');
                         document.getElementById('recipientFirstName').value = firstName;
@@ -105,8 +98,6 @@ async function handleSubmit(event) {
     event.preventDefault();
     
     // Get form values
-    const requesterFirstName = document.getElementById('requesterFirstName').value;
-    const requesterLastName = document.getElementById('requesterLastName').value;
     const recipientFirstName = document.getElementById('recipientFirstName').value;
     const recipientLastName = document.getElementById('recipientLastName').value;
     const street = document.getElementById('street').value;
@@ -137,8 +128,8 @@ async function handleSubmit(event) {
     }
 
     // Validate that either photo is uploaded or fields are filled
-    if (!photoData && (!requesterFirstName || !recipientFirstName || !street || !zipcode)) {
-        alert('Please either upload a card photo or fill in the required fields (names and address).');
+    if (!photoData && (!recipientFirstName || !street || !zipcode)) {
+        alert('Please either upload a card photo or fill in the required fields (name and address).');
         return;
     }
 
@@ -146,8 +137,6 @@ async function handleSubmit(event) {
     cardRequests.push({
         date,
         time,
-        requesterFirstName,
-        requesterLastName,
         recipientFirstName,
         recipientLastName,
         isLocal,
@@ -178,7 +167,7 @@ function downloadAllRequests() {
     
     // Create worksheet data
     const wsData = [
-        ['Date', 'Time', 'Requester First Name', 'Requester Last Name', 'Recipient First Name', 'Recipient Last Name', 'Local', 'Non-Member', 'Street Address', 'ZIP Code', 'Message/Instructions', 'Card Photo']
+        ['Date', 'Time', 'First Name', 'Last Name', 'Local', 'Non-Member', 'Street Address', 'ZIP Code', 'Message/Instructions', 'Card Photo']
     ];
 
     // Add requests to worksheet data in reverse order (newest first)
@@ -186,8 +175,6 @@ function downloadAllRequests() {
         wsData.push([
             request.date,
             request.time,
-            request.requesterFirstName || '',
-            request.requesterLastName || '',
             request.recipientFirstName || '',
             request.recipientLastName || '',
             request.isLocal ? 'Yes' : 'No',
@@ -201,7 +188,7 @@ function downloadAllRequests() {
         if (request.photo) {
             // Add image to the photo cell
             const rowIndex = index + 2; // +2 because of header row and 1-based indexing
-            const photoCell = XLSX.utils.encode_cell({r: rowIndex-1, c: 11}); // Column L
+            const photoCell = XLSX.utils.encode_cell({r: rowIndex-1, c: 9}); // Column J
             
             // Create drawing object for the image
             if (!wb.Drawings) wb.Drawings = [];
@@ -221,10 +208,8 @@ function downloadAllRequests() {
     ws['!cols'] = [
         {wch: 12}, // Date
         {wch: 12}, // Time
-        {wch: 20}, // Requester First Name
-        {wch: 20}, // Requester Last Name
-        {wch: 20}, // Recipient First Name
-        {wch: 20}, // Recipient Last Name
+        {wch: 20}, // First Name
+        {wch: 20}, // Last Name
         {wch: 10}, // Local
         {wch: 12}, // Non-Member
         {wch: 30}, // Street Address
