@@ -21,7 +21,7 @@
         </header>
         <form id="cardForm" onsubmit="handleSubmit(event)">
             <div class="form-group">
-                <label for="photo">Upload Card Photo: <span class="optional">(optional)</span></label>
+                <label for="photo">Upload Card Photo:</label>
                 <input type="file" id="photo" name="photo" accept="image/*" class="file-input">
                 <div id="photoPreview" class="photo-preview"></div>
                 <p class="photo-help">Upload a photo of the card to automatically fill in the details</p>
@@ -29,10 +29,10 @@
 
             <div id="manualFields" class="manual-fields">
                 <div class="form-group name-group">
-                    <label>Recipient Name: <span class="required">*</span></label>
+                    <label>Recipient Name:</label>
                     <div class="input-row">
                         <div class="input-group">
-                            <input type="text" id="recipientFirstName" name="recipientFirstName" placeholder="First Name" required>
+                            <input type="text" id="recipientFirstName" name="recipientFirstName" placeholder="First Name">
                         </div>
                         <div class="input-group">
                             <input type="text" id="recipientLastName" name="recipientLastName" placeholder="Last Name">
@@ -41,50 +41,39 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Recipient Address: <span class="required">*</span></label>
+                    <label>Recipient Address:</label>
                     <div class="input-row">
                         <div class="input-group street">
-                            <input type="text" id="street" name="street" placeholder="Street Address" required>
+                            <input type="text" id="street" name="street" placeholder="Street Address">
                         </div>
                         <div class="input-group zip">
-                            <input type="text" id="zipcode" name="zipcode" placeholder="ZIP Code" pattern="[0-9]{5}" title="Please enter a valid 5-digit ZIP code" maxlength="5" required>
+                            <input type="text" id="zipcode" name="zipcode" placeholder="ZIP Code" maxlength="5">
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>Recipient Status: <span class="required">*</span></label>
-                    <div class="checkbox-group">
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="isLocal" name="isLocal" required>
-                            <label for="isLocal">Recipient is local to Crossville</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="isNonMember" name="isNonMember" required>
-                            <label for="isNonMember">Recipient is not a Church of Christ member</label>
-                        </div>
-                    </div>
+                    <label>Recipient Status:</label>
+                    <input type="checkbox" id="isLocal" name="isLocal">
+                    <label for="isLocal">Recipient is local to Crossville</label>
+                    <br>
+                    <input type="checkbox" id="isNonMember" name="isNonMember">
+                    <label for="isNonMember">Recipient is not a Church of Christ member</label>
                 </div>
 
                 <div class="form-group">
-                    <label for="request">Message: <span class="optional">(optional)</span></label>
+                    <label for="request">Message:</label>
                     <textarea id="request" name="request" rows="4" placeholder="Card request message"></textarea>
                 </div>
             </div>
 
-            <div class="form-footer">
-                <p class="required-note"><span class="required">*</span> Required fields</p>
-                <div class="button-group">
-                    <button type="submit">Submit Card Request</button>
-                    <button type="button" class="secondary-button" onclick="downloadAllRequests()">Download Card Requests (Excel)</button>
-                </div>
-            </div>
+            <button type="submit">Submit Card Request</button>
+            <button type="button" class="secondary-button" onclick="downloadAllRequests()">Download Card Requests (Excel)</button>
         </form>
 
         <div id="confirmation" class="confirmation hidden">
-            <div class="success-icon">✓</div>
             <h2>Thank you for your card request!</h2>
-            <p>Your card request has been submitted successfully and will be processed soon.</p>
+            <p>Your card request has been submitted successfully.</p>
             <div class="confirmation-buttons">
                 <button type="button" onclick="submitAnotherRequest()">Submit Another Card Request</button>
                 <button type="button" class="secondary-button" onclick="downloadAllRequests()">Download All Card Requests</button>
@@ -93,37 +82,23 @@
 
         <div class="requests-table">
             <h2>Card Requests</h2>
-            <div class="table-controls">
-                <input type="text" id="tableSearch" placeholder="Search requests..." class="search-input" aria-label="Search requests">
-                <label for="tableFilter" class="sr-only">Filter requests</label>
-                <select id="tableFilter" class="filter-select" aria-label="Filter requests">
-                    <option value="all">All Requests</option>
-                    <option value="local">Local Only</option>
-                    <option value="today">Today's Requests</option>
-                </select>
-            </div>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th data-sort="date">Date <span class="sort-icon">↕</span></th>
-                            <th data-sort="time">Time <span class="sort-icon">↕</span></th>
-                            <th data-sort="name">First Name <span class="sort-icon">↕</span></th>
-                            <th data-sort="name">Last Name <span class="sort-icon">↕</span></th>
-                            <th>Local</th>
-                            <th>Non-Member</th>
-                            <th>Street Address</th>
-                            <th>ZIP Code</th>
-                            <th>Message/Instructions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="requestsTableBody">
-                    </tbody>
-                </table>
-            </div>
-            <div id="noResults" class="no-results hidden">
-                No matching requests found.
-            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Local</th>
+                        <th>Non-Member</th>
+                        <th>Street Address</th>
+                        <th>ZIP Code</th>
+                        <th>Message/Instructions</th>
+                    </tr>
+                </thead>
+                <tbody id="requestsTableBody">
+                </tbody>
+            </table>
         </div>
     </div>
     <script src="script.js"></script>
