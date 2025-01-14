@@ -127,9 +127,9 @@ async function handleSubmit(event) {
         });
     }
 
-    // Validate that either photo is uploaded or fields are filled
-    if (!photoData && (!recipientFirstName || !street || !zipcode)) {
-        alert('Please either upload a card photo or fill in the required fields (name and address).');
+    // Validate required fields
+    if (!recipientFirstName || !street || !zipcode) {
+        alert('Please fill in all required fields (name and address).');
         return;
     }
 
