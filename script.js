@@ -1,13 +1,69 @@
 // Initialize or get existing card requests from localStorage
 let cardRequests = JSON.parse(localStorage.getItem('cardRequests') || '[]');
 
+// Table state
+let currentSort = { column: 'date', direction: 'desc' };
+let currentFilter = 'all';
+let searchQuery = '';
+
 // Function to update the table with card requests
 function updateRequestsTable() {
     const tableBody = document.getElementById('requestsTableBody');
+    const noResults = document.getElementById('noResults');
     tableBody.innerHTML = '';
 
-    // Add requests to table in reverse order (newest first)
-    [...cardRequests].reverse().forEach(request => {
+    // Get filtered and sorted requests
+    let requests = [...cardRequests];
+
+    // Apply filter
+    if (currentFilter === 'local') {
+        requests = requests.filter(request => request.isLocal);
+    } else if (currentFilter === 'today') {
+        const today = new Date().toLocaleDateString();
+        requests = requests.filter(request => request.date === today);
+    }
+
+    // Apply search
+    if (searchQuery) {
+        const query = searchQuery.toLowerCase();
+        requests = requests.filter(request => 
+            request.recipientFirstName?.toLowerCase().includes(query) ||
+            request.recipientLastName?.toLowerCase().includes(query) ||
+            request.street?.toLowerCase().includes(query) ||
+            request.zipcode?.includes(query) ||
+            request.request?.toLowerCase().includes(query)
+        );
+    }
+
+    // Sort requests
+    requests.sort((a, b) => {
+        let comparison = 0;
+        switch (currentSort.column) {
+            case 'date':
+                comparison = new Date(a.date) - new Date(b.date);
+                break;
+            case 'time':
+                comparison = new Date('1970/01/01 ' + a.time) - new Date('1970/01/01 ' + b.time);
+                break;
+            case 'name':
+                comparison = (a.recipientFirstName || '').localeCompare(b.recipientFirstName || '');
+                break;
+            default:
+                comparison = 0;
+        }
+        return currentSort.direction === 'asc' ? comparison : -comparison;
+    });
+
+    // Show/hide no results message
+    if (requests.length === 0) {
+        noResults.classList.remove('hidden');
+        return;
+    } else {
+        noResults.classList.add('hidden');
+    }
+
+    // Add requests to table
+    requests.forEach(request => {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${request.date}</td>
@@ -22,10 +78,52 @@ function updateRequestsTable() {
         `;
         tableBody.appendChild(row);
     });
+
+    // Update sort icons
+    document.querySelectorAll('th[data-sort]').forEach(th => {
+        const icon = th.querySelector('.sort-icon');
+        if (th.dataset.sort === currentSort.column) {
+            th.classList.add('active');
+            icon.textContent = currentSort.direction === 'asc' ? '↑' : '↓';
+        } else {
+            th.classList.remove('active');
+            icon.textContent = '↕';
+        }
+    });
 }
 
 // Initialize table when page loads
-document.addEventListener('DOMContentLoaded', updateRequestsTable);
+document.addEventListener('DOMContentLoaded', () => {
+    updateRequestsTable();
+
+    // Add sort functionality
+    document.querySelectorAll('th[data-sort]').forEach(th => {
+        th.addEventListener('click', () => {
+            const column = th.dataset.sort;
+            if (currentSort.column === column) {
+                currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSort.column = column;
+                currentSort.direction = 'asc';
+            }
+            updateRequestsTable();
+        });
+    });
+
+    // Add search functionality
+    const searchInput = document.getElementById('tableSearch');
+    searchInput.addEventListener('input', (e) => {
+        searchQuery = e.target.value;
+        updateRequestsTable();
+    });
+
+    // Add filter functionality
+    const filterSelect = document.getElementById('tableFilter');
+    filterSelect.addEventListener('change', (e) => {
+        currentFilter = e.target.value;
+        updateRequestsTable();
+    });
+});
 
 // Add photo preview and OCR functionality
 document.getElementById('photo').addEventListener('change', async function(event) {
