@@ -127,9 +127,23 @@ async function handleSubmit(event) {
         });
     }
 
+    // Validate ZIP code format
+    const zipRegex = /^\d{5}$/;
+    if (!zipRegex.test(zipcode)) {
+        alert('Please enter a valid 5-digit ZIP code.');
+        document.getElementById('zipcode').focus();
+        return;
+    }
+
     // Validate required fields
-    if (!recipientFirstName || !street || !zipcode) {
-        alert('Please fill in all required fields (name and address).');
+    if (!recipientFirstName) {
+        alert('Please enter the recipient\'s first name.');
+        document.getElementById('recipientFirstName').focus();
+        return;
+    }
+    if (!street) {
+        alert('Please enter the street address.');
+        document.getElementById('street').focus();
         return;
     }
 
